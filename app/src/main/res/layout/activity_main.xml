@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgrey"
+    android:fitsSystemWindows="true"
+    tools:context=".Activities.ActivityMain"
+    tools:openDrawer="start">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        //the app_bar holds the toolbar and FrameLayout
+        <include
+            layout="@layout/layout_app_bar_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:visibility="gone"
+            android:progressBackgroundTint="@color/colorPrimaryBright"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+
+    //the navigation view itself, starts from left of screen
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/colorAccent"
+        app:itemIconTint="@color/black"
+        app:menu="@menu/menu_drawer" />
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

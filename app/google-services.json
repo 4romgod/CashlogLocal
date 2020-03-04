@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "874297908220",
+    "firebase_url": "https://cashlog-fb.firebaseio.com",
+    "project_id": "cashlog-fb",
+    "storage_bucket": "cashlog-fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874297908220:android:8338c89cc25138cf0b7079",
+        "android_client_info": {
+          "package_name": "com.silverback.lucy.cashlog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874297908220-h7lr60pkvbn7m5ducje1bg7n9fog8lco.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.silverback.lucy.cashlog",
+            "certificate_hash": "7507314f3a3cc7c32cf2af0cb3bc6f46ed584bfb"
+          }
+        },
+        {
+          "client_id": "874297908220-rmp8ll07moo2ncif6hii47c8sa5sm7o0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaqp0jJLVhIjldr4dDQQd2jFWCfIs6xU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874297908220-rmp8ll07moo2ncif6hii47c8sa5sm7o0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

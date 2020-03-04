@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Fragments.FragmentAbout">
+
+
+    <TextView
+        android:id="@+id/devTitleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="DEVELOPER"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/nameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Ebenezer Mathebula"
+        app:layout_constraintEnd_toEndOf="@+id/devTitleTv"
+        app:layout_constraintStart_toStartOf="@id/devTitleTv"
+        app:layout_constraintTop_toBottomOf="@+id/devTitleTv" />
+
+    <TextView
+        android:id="@+id/contactsTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="CONTACTS"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTv" />
+
+    <TextView
+        android:id="@+id/cellTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Cell: +2763 289 9004"
+        app:layout_constraintEnd_toEndOf="@+id/contactsTv"
+        app:layout_constraintStart_toStartOf="@id/contactsTv"
+        app:layout_constraintTop_toBottomOf="@+id/contactsTv" />
+
+    <TextView
+        android:id="@+id/emailTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="email: silverback730@yshoo.com"
+        app:layout_constraintStart_toStartOf="@id/cellTv"
+        app:layout_constraintTop_toBottomOf="@+id/cellTv" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
