@@ -15,8 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -29,18 +27,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.silverback.lucy.cashlog.Activities.ActivityMain;
 import com.silverback.lucy.cashlog.Model.ObjectTemplate.MyDate;
 import com.silverback.lucy.cashlog.R;
-import com.silverback.lucy.cashlog.Model.DatabaseLocal.DatabaseHelper;
 import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
+import com.silverback.lucy.cashlog.Utils.UI;
 import com.silverback.lucy.cashlog.Utils.Validation;
 
 import java.util.Date;
@@ -59,17 +52,6 @@ public class FragmentInsert extends Fragment {
 
     float amount;
     String tabName;
-    int nameEtColor, amountEtColor;
-
-    Validation validation = new Validation();
-
-    DatabaseHelper myDB;
-    FirebaseDatabase fireDb = FirebaseDatabase.getInstance();
-    DatabaseReference fireUsersRef = fireDb.getReference("").child("users");
-    DatabaseReference fireUserIdRefItem;
-
-    FirebaseUser currentUser;
-    String userId;
 
 
     @Override
@@ -86,14 +68,6 @@ public class FragmentInsert extends Fragment {
         tabName = getArguments().getString("FRAG_NAME");    //get the name of prev fragment, either MoneyIn or MoneyOut
         Log.d(TAG, "onCreateView: fragment insert for"+tabName+" instantiated user interface view");
         setHasOptionsMenu(true);
-
-        myDB = new DatabaseHelper(getActivity());
-
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(currentUser!=null) {
-            userId = currentUser.getUid();
-            fireUserIdRefItem=fireUsersRef.child(userId).child(tabName);
-        }
 
         initToolbar();       //enabling the toolbar
         initViews();
@@ -137,7 +111,7 @@ public class FragmentInsert extends Fragment {
         //lock the drawer
         ((ActivityMain)getActivity()).mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
-    }
+    }       //end onStart()
 
 
     @Override       //removes the main toolbar
@@ -172,7 +146,7 @@ public class FragmentInsert extends Fragment {
                     fragmentManager.popBackStack();
                 }
 
-                hideKeyboard();
+                UI.hideKeyboard(v, getContext());
 
             }       //end onClick()
         }); //end setNavigationOnClickListener
@@ -183,40 +157,36 @@ public class FragmentInsert extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                //don't go forward if editText input is invalid
-                validate(nameEt, nameEtColor);
-                validate(amountEt, amountEtColor);
+                if(!Validation.isEmpty(nameEt) && !Validation.isEmpty(amountEt)){
 
-                storeItem(getInputItem(), tabName);
+                    View view = getActivity().getCurrentFocus();
+                    if(view != null){
+                        UI.hideKeyboard(view, getActivity());
+                    }
 
-                hideKeyboard();
+                    //storeItem(getInputItem(), tabName);
 
-                //return fragment to previous fragment when save is pressed
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if(fragmentManager.getBackStackEntryCount() != 0){
-                    fragmentManager.popBackStack();
-                }
+                    //return fragment to previous fragment when save is pressed
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    if(fragmentManager.getBackStackEntryCount() != 0){
+                        fragmentManager.popBackStack();
+                    }
+
+                }       //end if()
 
                 return true;
-
             }       //end onMenuItemClick()
         });
+
     }       //end initToolbar()
 
 
     /**
      * Stores an item to FirebaseDatabase or Local Database
-     *
      * @param item  The item object to be inserted to database
      * @param type  Whether item is moneyIn or moneyOut
      */
     public void storeItem(Item item, String type){
-
-        if(currentUser!=null){      //user is logged in, store item in Firebase
-            Log.d(TAG, "storeItem: about to push item to firebase database");
-            fireUserIdRefItem.push().setValue(item);
-            Log.d(TAG, "storeItem: item successfully pushed");
-        }
 /*
         else {                      //user not logged in, store item in locally
             if(type.equalsIgnoreCase(getString(R.string.type_money_in))){
@@ -228,24 +198,7 @@ public class FragmentInsert extends Fragment {
 
         }       //end else
 */
-
     }       //end storeItem()
-
-
-    //validate input, then change background of ET if invalid
-    /**
-     * @param et     EditText to be validated
-     * @param color  Red color of invalid EditText
-     */
-    public Boolean validate(EditText et, int color){
-        //don't go forward if nameEt input is invalid
-        if(validation.isEmpty(et)){
-            et.setBackgroundColor(Color.RED);
-            color=Color.RED;
-            return false;
-        }
-        return true;
-    }       //end validate()
 
 
     //use information to create an item
@@ -261,19 +214,11 @@ public class FragmentInsert extends Fragment {
         description = descriptionEt.getText().toString();
 
         //initialize the item
-        Item item = new Item(name, amount, description, theDate);
+        Item item = new Item(tabName, name, amount, description, theDate);
 
         return item;
     }       //end insertData()
 
-
-    private void hideKeyboard() {
-        View view = this.getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }       //closeKeyBoard()
 
 
 }       //close the FragmentInsert class

@@ -5,6 +5,12 @@
     <group android:checkableBehavior="none">
 
         <item
+            android:id="@+id/delete"
+            android:icon="@drawable/ic_baseline_delete_black_24dp"
+            android:title="delete"
+            app:showAsAction="always"/>
+
+        <item
             android:id="@+id/save"
             android:icon="@drawable/ic_baseline_check_black_24dp"
             android:title="save"

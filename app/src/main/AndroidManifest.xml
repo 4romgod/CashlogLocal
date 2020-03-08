@@ -66,16 +66,6 @@
             android:label="About"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <activity
-            android:name=".Fragments.FragmentSignUp"
-            android:label="Sign Up"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
-        <activity
-            android:name=".Fragments.FragmentLogIn"
-            android:label="Log In"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
     </application>
 
 </manifest>

@@ -169,7 +169,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 float amount = rs.getFloat(2);
                 String description = rs.getString(3);
 
-                list.add(new Item(id, name, amount, description));          //put the item object in the Array
+                //list.add(new Item(id, name, amount, description));          //put the item object in the Array
             }       //end while()
 
         }       //end if()
@@ -208,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int month = rs.getInt(6);
                 int year = rs.getInt(7);
 
-                list.add(new Item(id, name, amount, description));          //put the item object in the Array
+                //list.add(new Item(id, name, amount, description));          //put the item object in the Array
             }       //end while()
         }       //end if()
 

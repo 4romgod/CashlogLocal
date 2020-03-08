@@ -29,14 +29,11 @@ public class ActivitySplash extends AppCompatActivity {
         //blink();
 
         Thread thread = new Thread(){
-
             @Override
             public void run() {
                 Log.d(TAG, "run: method to run the thread");
-                Log.d(TAG, "run: method to run the thread");
                 try {
-                    //time allocated to the splash
-                    sleep(3000);        //appear for 5 seconds
+                    sleep(300);   //time allocated to the splash
                 }
                 catch (Exception ex){
                     ex.printStackTrace();
@@ -46,6 +43,7 @@ public class ActivitySplash extends AppCompatActivity {
                     Intent mainIntent = new Intent(ActivitySplash.this, ActivityMain.class);
                     startActivity(mainIntent);
                 }       //end finally()
+
             }       //end run()
         };
         thread.start();
@@ -70,7 +68,6 @@ public class ActivitySplash extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
         finish();
     }       //end onPause()
 

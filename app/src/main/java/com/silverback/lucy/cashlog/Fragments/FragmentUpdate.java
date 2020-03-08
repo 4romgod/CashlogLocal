@@ -85,7 +85,7 @@ public class FragmentUpdate extends Fragment{
         amount = Float.parseFloat(amountEt.getText().toString());
         description = descriptionEt.getText().toString();
 
-        Item newItem = new Item(name, amount, description);
+        Item newItem = new Item(fragName, name, amount, description);
 
         return newItem;
     }       //end insertData()
@@ -106,7 +106,8 @@ public class FragmentUpdate extends Fragment{
 
     //initializing the toolbar
     public void initToolbar(){
-        Toolbar toolbar = layoutMain.findViewById(R.id.toolbar_insert_fragment);
+        Toolbar toolbar = layoutMain.findViewById(R.id.toolbar_update_fragment);
+        toolbar.inflateMenu(R.menu.menu_update_item);       //inflates menu into toolbar
         toolbar.setTitle(getString(R.string.title_update));
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_black_24dp);     //prints back icon into toolbar
 

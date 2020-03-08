@@ -18,7 +18,7 @@
 
         //the toolbar
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_insert_fragment"
+            android:id="@+id/toolbar_update_fragment"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"

@@ -22,15 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:visibility="gone"
-            android:progressBackgroundTint="@color/colorPrimaryBright"
-            android:layout_centerInParent="true"/>
-
     </RelativeLayout>
 
 

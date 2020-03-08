@@ -18,7 +18,6 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
@@ -29,6 +28,7 @@ import android.view.ViewGroup;
 import com.silverback.lucy.cashlog.Activities.ActivityMain;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Adapters.AdapterTabs;
+import com.silverback.lucy.cashlog.Utils.UI;
 
 import java.util.ArrayList;
 
@@ -37,11 +37,11 @@ import java.util.ArrayList;
  * This is the homepage which holds MoneyIn and MoneyOut tabs
  */
 public class FragmentHome extends Fragment  {
-
     private static final String TAG = "FragmentHome";
 
-    View layoutMain;
+    FragmentManager fragmentManager;
 
+    View layoutMain;
     TabLayout tabLayout;
     int tabPosition;    //position of the visible tab
 
@@ -56,7 +56,6 @@ public class FragmentHome extends Fragment  {
      */
     public static Fragment newInsertFragment(String name){
         Fragment fragment = new FragmentInsert();
-
         Bundle args = new Bundle();
         args.putString("FRAG_NAME", name);
         fragment.setArguments(args);
@@ -69,30 +68,21 @@ public class FragmentHome extends Fragment  {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: fragment home is created");
-    }
+    }       //end onCreate()
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //Log.d(TAG, "onCreateView: fragment home instantiated user interface view");
-
         layoutMain = inflater.inflate(R.layout.fragment_home, null);
+
+        fragmentManager = getActivity().getSupportFragmentManager();
 
         //unlock the navigation drawer
         ((ActivityMain)getActivity()).mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
-        mFragments.add(new FragmentMoneyIn());
-        mFragments.add(new FragmentMoneyOut());
-
         createTabs();       //method creates tab, and activate floating button
         floatingButton();
-
-//        //initialize database with values
-//        DatabaseHelper myDB = new DatabaseHelper(getActivity());
-//        myDB.insertLiability(new Item("Grocery", "R1000", "I bought some groceries"));
-//        myDB.insertLiability(new Item("Takeaway", "R200", "I bought some takeaways"));
-//        myDB.insertLiability(new Item("Rent", "R4000", "I paid rent"));
 
         return layoutMain;
     }       //end onCreateView()
@@ -104,6 +94,9 @@ public class FragmentHome extends Fragment  {
 
     public void createTabs(){
         //Log.d(TAG, "createTabs: create tabs, init viewpager, set adapter");
+
+        mFragments.add(new FragmentMoneyIn());
+        mFragments.add(new FragmentMoneyOut());
 
         //create Tabs
         tabLayout = (TabLayout) layoutMain.findViewById(R.id.tab_layout);
@@ -146,16 +139,16 @@ public class FragmentHome extends Fragment  {
      */
     public void floatingButton(){
 
-        //activate the Floating Button
+        //get the Floating Button
         fab = layoutMain.findViewById(R.id.floatingActionButton);
 
-        //enable the floating button
+        //enable the floating button click
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = null;
 
-                //chooses fragment to change into
+                //chooses fragment to INSERT into
                 if(tabLayout.getSelectedTabPosition()==0){
                     fragment = FragmentHome.newInsertFragment(getString(R.string.type_money_in));
                 }
@@ -164,21 +157,13 @@ public class FragmentHome extends Fragment  {
                 }
 
                 //change fragment
-                if(fragment != null){
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.replace(R.id.layout_frame_main, fragment);
-                    transaction.addToBackStack(fragment.toString());
-                    transaction.commit();
-                }       //end if()
+                UI.loadFragment(fragmentManager, fragment, R.id.layout_frame_main);
 
             }       //end onClick()
 
         });         //end floating button
 
     }       //end floatingButton()
-
-
 
 
 }       //close the class

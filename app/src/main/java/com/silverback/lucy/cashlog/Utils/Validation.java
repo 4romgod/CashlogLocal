@@ -8,8 +8,13 @@ import android.widget.EditText;
 
 public class Validation {
 
-    public boolean isEmpty(EditText editText){
+    /**
+     * Returns true if editText is empty
+     * @param editText     EditText to be validated
+     */
+    public static boolean isEmpty(EditText editText){
         if(editText.getText().toString().equalsIgnoreCase(null)||editText.getText().toString().equalsIgnoreCase("")){
+            editText.setBackgroundColor(Color.RED);
             return true;
         }
         else {

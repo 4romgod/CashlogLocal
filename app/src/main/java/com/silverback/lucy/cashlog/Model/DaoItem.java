@@ -3,6 +3,12 @@ package com.silverback.lucy.cashlog.Model;
 import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
+
 import java.util.List;
 
 /**
@@ -10,26 +16,20 @@ import java.util.List;
  * <p>interface with abstract methods for data access</p>
  *
  */
+@Dao
 public interface DaoItem {
-
-    void insert(Item item);
-
 
     /**
      * Method to return a list of all the items
      * @return LiveData List of all items
      */
+    @Query("Select * from ITEMS")
     LiveData<List<Item>> getItems();
 
+    @Insert
+    void insert(Item item);
 
-    /**
-     * Method to return a item specified by ID
-     * @param id    The ID of the Item
-     * @return      Returns a Item object
-     */
-    Item getItemById(int id);
-
-
+    @Update
     void update(Item item);
 
 
@@ -37,14 +37,8 @@ public interface DaoItem {
      * Takes an item object and deletes it from the database
      * @param item Takes a item Object
      */
+    @Delete
     void delete(Item item);
-
-
-    /**
-     * Delets all the items from the database
-     */
-    void deleteAllItems();
-
 
 
 }       //end class

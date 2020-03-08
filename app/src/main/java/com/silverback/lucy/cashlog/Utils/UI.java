@@ -1,18 +1,33 @@
 package com.silverback.lucy.cashlog.Utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 
 public class UI {
 
+    /**
+     * @param fragment     the fragment to be loaded
+     */
+    public static void loadFragment(FragmentManager fragmentManager, Fragment fragment, int container){
+        if(fragment != null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(container, fragment);
+            transaction.addToBackStack(""+fragment.toString());
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction.commit();
+        }
+    }       //end loadFragment()
 
-    public static void hideKeyboard(View view, Activity activity){
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+
+    public static void hideKeyboard(View view, Context context){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }       //end hideKeyboard()
 
