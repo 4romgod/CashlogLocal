@@ -4,16 +4,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
+import com.silverback.lucy.cashlog.Fragments.FragmentUpdate;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
 import com.silverback.lucy.cashlog.Model.POJO.MyDate;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Utils.Constants;
+import com.silverback.lucy.cashlog.Utils.UI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,9 +148,7 @@ public class AdapterListView extends BaseAdapter {
 
 
         return convertView;
-
     }       //end getView()
-
 
 
 

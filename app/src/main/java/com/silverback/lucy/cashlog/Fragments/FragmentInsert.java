@@ -20,6 +20,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.KeyEvent;
@@ -31,6 +32,7 @@ import android.widget.EditText;
 
 import com.silverback.lucy.cashlog.Activities.ActivityMain;
 import com.silverback.lucy.cashlog.Model.POJO.MyDate;
+import com.silverback.lucy.cashlog.Model.ViewModelItem;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
 import com.silverback.lucy.cashlog.Utils.UI;
@@ -67,7 +69,6 @@ public class FragmentInsert extends Fragment {
 
         tabName = getArguments().getString("FRAG_NAME");    //get the name of prev fragment, either MoneyIn or MoneyOut
         Log.d(TAG, "onCreateView: fragment insert for"+tabName+" instantiated user interface view");
-        setHasOptionsMenu(true);
 
         initToolbar();       //enabling the toolbar
         initViews();
@@ -130,6 +131,7 @@ public class FragmentInsert extends Fragment {
 
     //method to ic_baseline_insert a toolbar
     public void initToolbar() {
+        setHasOptionsMenu(true);
         Toolbar toolbar = layoutMain.findViewById(R.id.toolbar_insert_fragment);
         toolbar.inflateMenu(R.menu.menu_insert_item);       //inflates menu into toolbar
         toolbar.setTitle(getString(R.string.title_insert) +" "+ tabName);
@@ -164,7 +166,9 @@ public class FragmentInsert extends Fragment {
                         UI.hideKeyboard(view, getActivity());
                     }
 
-                    //storeItem(getInputItem(), tabName);
+                    //database operation
+                    ViewModelItem viewModelItem = ViewModelProviders.of(getActivity()).get(ViewModelItem.class);
+                    viewModelItem.insert(getInputItem());
 
                     //return fragment to previous fragment when save is pressed
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -179,26 +183,6 @@ public class FragmentInsert extends Fragment {
         });
 
     }       //end initToolbar()
-
-
-    /**
-     * Stores an item to FirebaseDatabase or Local Database
-     * @param item  The item object to be inserted to database
-     * @param type  Whether item is moneyIn or moneyOut
-     */
-    public void storeItem(Item item, String type){
-/*
-        else {                      //user not logged in, store item in locally
-            if(type.equalsIgnoreCase(getString(R.string.type_money_in))){
-                myDB.insertAsset(item);
-            }
-            else if(type.equalsIgnoreCase(getString(R.string.type_money_out))){
-                myDB.insertLiability(getInputItem());
-            }
-
-        }       //end else
-*/
-    }       //end storeItem()
 
 
     //use information to create an item

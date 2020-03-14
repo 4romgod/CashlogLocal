@@ -46,7 +46,7 @@ public class AdapterListViewHistory extends ArrayAdapter<Item> {
         MyDate date = getItem(position).getDate();
 
         //create the item object with the information
-        Item item = new Item(id, type, name, amount, description, date);
+        Item item = new Item(type, name, amount, description, date);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);

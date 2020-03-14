@@ -47,6 +47,8 @@ public class RepositoryItem {
     }       //end deleteAllItems()
 
 
+
+    //------------------------------------------------------ASYNC OPERATIONS----------------------------
     private static class InsertAsyncTask extends AsyncTask<Item, Void, Void>{
         private DaoItem mAsyncTaskDao;
 
@@ -105,6 +107,6 @@ public class RepositoryItem {
             return null;
         }
     }       //end innerClass
-
+//==========================================================END ASYNC OPERATIONS ===========================
 
 }       //end class

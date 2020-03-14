@@ -9,15 +9,12 @@ package com.silverback.lucy.cashlog.Fragments;
 *
 * */
 
-
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -26,26 +23,30 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.silverback.lucy.cashlog.Activities.ActivityMain;
+import com.silverback.lucy.cashlog.Model.ViewModelItem;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Model.DatabaseLocal.DatabaseHelper;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
+import com.silverback.lucy.cashlog.Utils.UI;
+import com.silverback.lucy.cashlog.Utils.Validation;
 
 public class FragmentUpdate extends Fragment{
-
     private static final String TAG = "FragmentUpdate";
+
+    ViewModelItem viewModelItem;
 
     //all views
     View layoutMain;
     EditText nameEt, descriptionEt, amountEt;
+
     String name, description;
     Float amount;
 
-    DatabaseHelper myDB;
-
-    String fragName;
-    Item oldItem;
+    String fragName;    //also gives us the TYPE of the Item
+    Item oldItem;       //state of Item before updating
 
 
     @Override
@@ -58,25 +59,18 @@ public class FragmentUpdate extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutMain = inflater.inflate(R.layout.fragment_update, null);
-        setHasOptionsMenu(true);
 
         fragName = getArguments().getString("FRAG_NAME");
         oldItem = (Item) getArguments().getSerializable("ITEM");
-        Log.d(TAG, "onCreateView: FragmentUpdate started for "+fragName+", item: "+oldItem.getId()+"."+oldItem.getName());
+        Log.d(TAG, "onCreateView: FragmentUpdate started for "+fragName+", itemID:"+oldItem.getId()+". Name:"+oldItem.getName());
 
-        //lock the navigation drawer
-        ((ActivityMain)getActivity()).mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
-        myDB = new DatabaseHelper(getActivity());
-
+        viewModelItem = ViewModelProviders.of(getActivity()).get(ViewModelItem.class);
 
         initToolbar();
         initViews();
 
         return layoutMain;
     }       //close the onCreateView
-
-
 
 
     //use information to create an item
@@ -86,9 +80,31 @@ public class FragmentUpdate extends Fragment{
         description = descriptionEt.getText().toString();
 
         Item newItem = new Item(fragName, name, amount, description);
+        newItem.setId(oldItem.getId());
 
         return newItem;
     }       //end insertData()
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //lock the navigation drawer
+        ((ActivityMain)getActivity()).mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    @Override       //removes the main toolbar
+    public void onResume() {
+        super.onResume();
+        ((ActivityMain) getActivity()).getSupportActionBar().hide();
+    }       //end onResume()
+
+
+    @Override       //returns the main toolbar when we exit this fragment
+    public void onStop() {
+        super.onStop();
+        ((ActivityMain) getActivity()).getSupportActionBar().show();
+    }       //end onStop()
 
 
     //initializing the views
@@ -106,6 +122,7 @@ public class FragmentUpdate extends Fragment{
 
     //initializing the toolbar
     public void initToolbar(){
+        setHasOptionsMenu(true);
         Toolbar toolbar = layoutMain.findViewById(R.id.toolbar_update_fragment);
         toolbar.inflateMenu(R.menu.menu_update_item);       //inflates menu into toolbar
         toolbar.setTitle(getString(R.string.title_update));
@@ -121,28 +138,33 @@ public class FragmentUpdate extends Fragment{
                 if(fragmentManager.getBackStackEntryCount() != 0){
                     fragmentManager.popBackStack();
                 }       //end if()
+                UI.hideKeyboard(v, getContext());
 
-                hideKeyboard();
             }       //end onClick()
         });
 
-
-        toolbar.inflateMenu(R.menu.menu_insert_item);       //inflates menu into toolbar
 
         //listener for the toolbar save button
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                hideKeyboard();
 
                 switch (item.getItemId()){
-
                     case R.id.delete: {
-                        deleteItem(oldItem);
+                        //database operation
+                        viewModelItem.delete(oldItem);
                         break;
                     }
                     case R.id.save: {
-                        updateItem(getNewItem());
+                        if(!Validation.isEmpty(nameEt) && !Validation.isEmpty(amountEt)) {
+                            View view = getActivity().getCurrentFocus();
+                            if (view != null) {
+                                UI.hideKeyboard(view, getActivity());
+                            }
+
+                            //database operation
+                            viewModelItem.update(getNewItem());
+                        }
                         break;
                     }
 
@@ -159,47 +181,5 @@ public class FragmentUpdate extends Fragment{
         });
     }       //end initToolbar()
 
-
-    public void updateItem(Item item){
-        Log.d(TAG, "updateItem: updating item: "+item.getId()+"."+item.getName());
-        if (fragName.equalsIgnoreCase(getString(R.string.type_money_in))) {
-            myDB.updateAsset(oldItem.getId(), getNewItem());
-        } else if (fragName.equalsIgnoreCase(getString(R.string.type_money_out))) {
-            myDB.updateLiability(oldItem.getId(), getNewItem());
-        }
-    }
-
-    public void deleteItem(Item item){
-        Log.d(TAG, "deleteItem: deleting item: "+item.getId()+"."+item.getName());
-        if (fragName.equalsIgnoreCase(getString(R.string.type_money_in))) {
-            myDB.deleteAsset(oldItem.getId());
-        } else if (fragName.equalsIgnoreCase(getString(R.string.type_money_out))) {
-            myDB.deleteLiability(oldItem.getId());
-        }
-    }
-
-
-    @Override       //removes the main toolbar
-    public void onResume() {
-        super.onResume();
-        ((ActivityMain) getActivity()).getSupportActionBar().hide();
-    }       //end onResume()
-
-
-    @Override       //returns the main toolbar when we exit this fragment
-    public void onStop() {
-        super.onStop();
-        ((ActivityMain) getActivity()).getSupportActionBar().show();
-    }       //end onStop()
-
-
-    //close the keyboard
-    private void hideKeyboard() {
-        View view = this.getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }       //closeKeyBoard()
 
 }       //close the FragmentInsert class

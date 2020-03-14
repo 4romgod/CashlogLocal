@@ -5,8 +5,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "ITEM_TABLE")
-public class Item {
+public class Item implements Serializable {
 
     @Ignore
     public final static String tableName = "ITEM_TABLE";

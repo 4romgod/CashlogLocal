@@ -19,7 +19,6 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -35,13 +34,11 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.silverback.lucy.cashlog.Fragments.FragmentAbout;
 import com.silverback.lucy.cashlog.Fragments.FragmentHistory;
 import com.silverback.lucy.cashlog.Fragments.FragmentHome;
 import com.silverback.lucy.cashlog.Fragments.FragmentMessage;
-import com.silverback.lucy.cashlog.Model.ViewModelItem;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Utils.UI;
 
@@ -50,6 +47,7 @@ import com.silverback.lucy.cashlog.Utils.UI;
  */
 public class ActivityMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener{
     private static final String TAG = "ActivityMain";
+
 
     //fragment instances
     FragmentManager fragmentManager = getSupportFragmentManager();

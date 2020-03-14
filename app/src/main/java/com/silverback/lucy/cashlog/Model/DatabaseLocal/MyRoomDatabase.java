@@ -45,6 +45,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
     }       //end create()
 
 
+    //callback to insert data onStart()
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback(){
 
         @Override
@@ -55,8 +56,8 @@ public abstract class MyRoomDatabase extends RoomDatabase {
     };
 
 
+    //Async to add data onStart()
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void>{
-
         private final DaoItem mDaoItem;
 
         List<Item> allItems = new ArrayList();
@@ -64,7 +65,6 @@ public abstract class MyRoomDatabase extends RoomDatabase {
         PopulateDbAsync(MyRoomDatabase db){
             mDaoItem = db.daoItem();
         }
-
 
         @Override
         protected Void doInBackground(final Void... params) {

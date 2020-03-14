@@ -9,6 +9,7 @@
     android:background="@color/white"
     tools:context=".Fragments.FragmentHistory">
 
+
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="match_parent"

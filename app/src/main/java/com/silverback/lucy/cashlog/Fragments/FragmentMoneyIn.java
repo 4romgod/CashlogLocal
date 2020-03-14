@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,11 +31,12 @@ import com.silverback.lucy.cashlog.Model.ViewModelItem;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Adapters.AdapterListView;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
+import com.silverback.lucy.cashlog.Utils.UI;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentMoneyIn extends Fragment {
+public class FragmentMoneyIn extends Fragment{
 
     private static final String TAG = "FragmentMoneyIn";
 
@@ -44,7 +46,6 @@ public class FragmentMoneyIn extends Fragment {
     View layoutMain;
     ListView listView;
 
-    ArrayList list;
     AdapterListView adapter;
 
 
@@ -53,7 +54,7 @@ public class FragmentMoneyIn extends Fragment {
         Fragment fragment = new FragmentUpdate();
         Bundle args = new Bundle();
         args.putString("FRAG_NAME", name);
-        //args.putSerializable("ITEM", item);
+        args.putSerializable("ITEM", item);
         fragment.setArguments(args);
 
         return fragment;        //return fragment that contains its Name as a bundle
@@ -81,17 +82,28 @@ public class FragmentMoneyIn extends Fragment {
 
         mViewModelItem.getAllItems().observe(getActivity(), new Observer<List<Item>>() {
             @Override
-            public void onChanged(List<Item> items) {
+            public void onChanged(final List<Item> items) {
                 Toast.makeText(getContext(), "Something changed", Toast.LENGTH_SHORT).show();
                 adapter.setItems(items);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Item item = items.get(position);
+                        Fragment fragment = newUpdateFragment(getString(R.string.type_money_in), item);
+
+                        UI.loadFragment(getActivity().getSupportFragmentManager(), fragment, R.id.layout_frame_main);
+                    }
+                });
+
             }
         });
 
 
+
+
         return layoutMain;
     }       //end onCreateView()
-
-
 
 
 }       //end class
