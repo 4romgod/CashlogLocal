@@ -30,9 +30,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.silverback.lucy.cashlog.Activities.ActivityMain;
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.MyDate;
+import com.silverback.lucy.cashlog.Model.POJO.MyDate;
 import com.silverback.lucy.cashlog.R;
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
+import com.silverback.lucy.cashlog.Model.POJO.Item;
 import com.silverback.lucy.cashlog.Utils.UI;
 import com.silverback.lucy.cashlog.Utils.Validation;
 

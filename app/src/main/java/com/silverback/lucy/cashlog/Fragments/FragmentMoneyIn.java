@@ -16,21 +16,29 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.silverback.lucy.cashlog.Model.ViewModelItem;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Adapters.AdapterListView;
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
+import com.silverback.lucy.cashlog.Model.POJO.Item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentMoneyIn extends Fragment {
 
     private static final String TAG = "FragmentMoneyIn";
+
+    private ViewModelItem mViewModelItem;
 
     //all views
     View layoutMain;
@@ -65,11 +73,20 @@ public class FragmentMoneyIn extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutMain = inflater.inflate(R.layout.fragment_money_in, null);
 
-        list = new ArrayList();
+        mViewModelItem = ViewModelProviders.of(this).get(ViewModelItem.class);
 
-        adapter = new AdapterListView(getActivity(), R.layout.layout_custom_list_view_money_in, list);
         listView = layoutMain.findViewById(R.id.list_view_money_in);
+        adapter = new AdapterListView(getActivity(), R.layout.layout_custom_list_view_money_in);
         listView.setAdapter(adapter);
+
+        mViewModelItem.getAllItems().observe(getActivity(), new Observer<List<Item>>() {
+            @Override
+            public void onChanged(List<Item> items) {
+                Toast.makeText(getContext(), "Something changed", Toast.LENGTH_SHORT).show();
+                adapter.setItems(items);
+            }
+        });
+
 
         return layoutMain;
     }       //end onCreateView()

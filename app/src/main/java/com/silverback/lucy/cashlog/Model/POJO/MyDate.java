@@ -1,4 +1,4 @@
-package com.silverback.lucy.cashlog.Model.ObjectTemplate;
+package com.silverback.lucy.cashlog.Model.POJO;
 
 
 public class MyDate {

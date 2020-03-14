@@ -1,13 +1,15 @@
-package com.silverback.lucy.cashlog.Model.ObjectTemplate;
+package com.silverback.lucy.cashlog.Model.POJO;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-
-@Entity(tableName = "ITEMS")
+@Entity(tableName = "ITEM_TABLE")
 public class Item {
+
+    @Ignore
+    public final static String tableName = "ITEM_TABLE";
 
     @PrimaryKey(autoGenerate = true)
     int id;
@@ -35,15 +37,6 @@ public class Item {
         this.date = null;
     }
 
-    public Item(int ID, String type, String nm, float am, String desc, MyDate date){
-        this.id = ID;
-        this.type = type;
-        this.name = nm;
-        this.amount = am;
-        this.description = desc;
-        this.date = date;
-    }
-
     public Item(String type, String nm, float am, String desc, MyDate date){
         this.type = type;
         this.name = nm;
@@ -52,13 +45,6 @@ public class Item {
         this.date = date;
     }
 
-    public Item(int id, String type, String nm, float am, String desc){
-        this.id = id;
-        this.type = type;
-        this.name = nm;
-        this.amount = am;
-        this.description = desc;
-    }
 
     public Item(String type, String nm, float am, String desc){
         this.type = type;

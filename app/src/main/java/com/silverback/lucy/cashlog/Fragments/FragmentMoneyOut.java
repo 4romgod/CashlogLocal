@@ -21,7 +21,7 @@ import android.widget.ListView;
 
 import com.silverback.lucy.cashlog.Adapters.AdapterListView;
 import com.silverback.lucy.cashlog.R;
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
+import com.silverback.lucy.cashlog.Model.POJO.Item;
 
 import java.util.ArrayList;
 
@@ -63,11 +63,7 @@ public class FragmentMoneyOut extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutMain = inflater.inflate(R.layout.fragment_money_out, null);
 
-        list = new ArrayList();
-
-        adapter = new AdapterListView(getActivity(), R.layout.layout_custom_list_view_money_out, list);
         listView = layoutMain.findViewById(R.id.list_view_money_out);
-        listView.setAdapter(adapter);
 
         return layoutMain;
     }       //end onCreateView()

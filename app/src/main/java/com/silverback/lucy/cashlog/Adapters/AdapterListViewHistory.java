@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.MyDate;
+import com.silverback.lucy.cashlog.Model.POJO.Item;
+import com.silverback.lucy.cashlog.Model.POJO.MyDate;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Utils.Constants;
 

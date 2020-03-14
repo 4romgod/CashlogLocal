@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
+import com.silverback.lucy.cashlog.Model.POJO.Item;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -30,7 +30,7 @@ import androidx.fragment.app.FragmentManager;
 import com.silverback.lucy.cashlog.Activities.ActivityMain;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Model.DatabaseLocal.DatabaseHelper;
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
+import com.silverback.lucy.cashlog.Model.POJO.Item;
 
 public class FragmentUpdate extends Fragment{
 

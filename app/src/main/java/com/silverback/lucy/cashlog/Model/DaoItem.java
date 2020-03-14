@@ -1,6 +1,6 @@
 package com.silverback.lucy.cashlog.Model;
 
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
+import com.silverback.lucy.cashlog.Model.POJO.Item;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -19,15 +19,16 @@ import java.util.List;
 @Dao
 public interface DaoItem {
 
+    @Insert
+    void insert(Item item);
+
     /**
      * Method to return a list of all the items
      * @return LiveData List of all items
      */
-    @Query("Select * from ITEMS")
-    LiveData<List<Item>> getItems();
+    @Query("Select * from "+Item.tableName)
+    LiveData<List<Item>> getAllItems();
 
-    @Insert
-    void insert(Item item);
 
     @Update
     void update(Item item);
@@ -40,5 +41,7 @@ public interface DaoItem {
     @Delete
     void delete(Item item);
 
+    @Query("DELETE FROM "+Item.tableName)
+    void deleteAllItems();
 
 }       //end class

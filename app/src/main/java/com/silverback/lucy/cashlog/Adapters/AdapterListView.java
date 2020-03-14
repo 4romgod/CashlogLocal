@@ -10,13 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.Item;
-import com.silverback.lucy.cashlog.Model.ObjectTemplate.MyDate;
+import com.silverback.lucy.cashlog.Model.POJO.Item;
+import com.silverback.lucy.cashlog.Model.POJO.MyDate;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Utils.Constants;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 
 public class AdapterListView extends BaseAdapter {
@@ -31,7 +31,7 @@ public class AdapterListView extends BaseAdapter {
 
     LayoutInflater inflater;
 
-    ArrayList<Object> items;
+    List<Item> items = new ArrayList<>();
 
 
     /**
@@ -41,15 +41,10 @@ public class AdapterListView extends BaseAdapter {
      *
      * @param context Context
      * @param resource The resources to be used as a view
-     * @param items List of items to set in the listview
      */
-    public AdapterListView(@NonNull Context context, int resource, @NonNull ArrayList<Object> items) {
+    public AdapterListView(@NonNull Context context, int resource) {
         mContext = context;
         mResource = resource;
-
-        addDateObjects(items);      //add date objects to list of items
-
-        this.items = items;
 
         inflater = LayoutInflater.from(mContext);
         //inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,31 +52,10 @@ public class AdapterListView extends BaseAdapter {
     }       //end AdapterListView()
 
 
-    //adds the date objects to the list of items
-    public void addDateObjects(ArrayList items){
-        for (int i = 0; i < items.size(); i++) {
-            if (i == 0) {
-                Date date1 = new Date();
-                items.add(0, new MyDate(date1.getYear(), date1.getMonth(), date1.getDate(), date1.getHours(), date1.getMinutes(), date1.getSeconds()));
-            }
-            if (i > 0) {
-
-                //last object in the list
-                Object lastObjectInList = items.get(i);
-
-                if (lastObjectInList instanceof Item) {
-                    Item lastItemInList = (Item) lastObjectInList;
-
-                    Object prevObjectInList = items.get(i-1);
-                    if(prevObjectInList instanceof Item){
-                        items.add(i, lastItemInList.getDate());
-                    }
-                }
-            }
-        }
-
-    }       //end addDateObjects()
-
+    public void setItems(List<Item> items){
+        this.items = items;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getCount() {
