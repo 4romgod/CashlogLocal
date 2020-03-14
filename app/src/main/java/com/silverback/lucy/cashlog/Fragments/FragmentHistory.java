@@ -27,13 +27,11 @@ import java.util.ArrayList;
  * Shows all the user's items that exists in the daatabase
  */
 public class FragmentHistory extends Fragment {
-
     private static final String TAG = "FragmentHistory";
 
-    //all views
+    //ALL VIEWS
     View layoutMain;
     ProgressBar progressBar;
-
 
     ArrayList<Item> allData;
 
@@ -64,8 +62,6 @@ public class FragmentHistory extends Fragment {
 
         return layoutMain;
     }       //close the onCreateView
-
-
 
 
     @Override

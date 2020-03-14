@@ -28,7 +28,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.silverback.lucy.cashlog.Activities.ActivityMain;
 import com.silverback.lucy.cashlog.Model.ViewModelItem;
 import com.silverback.lucy.cashlog.R;
-import com.silverback.lucy.cashlog.Model.DatabaseLocal.DatabaseHelper;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
 import com.silverback.lucy.cashlog.Utils.UI;
 import com.silverback.lucy.cashlog.Utils.Validation;
@@ -45,7 +44,7 @@ public class FragmentUpdate extends Fragment{
     String name, description;
     Float amount;
 
-    String fragName;    //also gives us the TYPE of the Item
+    String typeFrag;    //also gives us the TYPE of the Item
     Item oldItem;       //state of Item before updating
 
 
@@ -53,16 +52,16 @@ public class FragmentUpdate extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: fragment update is created");
-    }
+    }       //end onCreate()
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutMain = inflater.inflate(R.layout.fragment_update, null);
 
-        fragName = getArguments().getString("FRAG_NAME");
+        typeFrag = getArguments().getString("FRAG_TYPE");
         oldItem = (Item) getArguments().getSerializable("ITEM");
-        Log.d(TAG, "onCreateView: FragmentUpdate started for "+fragName+", itemID:"+oldItem.getId()+". Name:"+oldItem.getName());
+        Log.d(TAG, "onCreateView(): FragmentUpdate started for "+ typeFrag +", itemID:"+oldItem.getId()+". Name:"+oldItem.getName());
 
         viewModelItem = ViewModelProviders.of(getActivity()).get(ViewModelItem.class);
 
@@ -79,7 +78,7 @@ public class FragmentUpdate extends Fragment{
         amount = Float.parseFloat(amountEt.getText().toString());
         description = descriptionEt.getText().toString();
 
-        Item newItem = new Item(fragName, name, amount, description);
+        Item newItem = new Item(typeFrag, name, amount, description);
         newItem.setId(oldItem.getId());
 
         return newItem;
@@ -133,13 +132,9 @@ public class FragmentUpdate extends Fragment{
             @Override
             public void onClick(View v) {
 
-                //change fragment to previous fragment when back is pressed
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if(fragmentManager.getBackStackEntryCount() != 0){
-                    fragmentManager.popBackStack();
-                }       //end if()
+                UI.popBackStack(fragmentManager);       //change fragment to previous fragment
                 UI.hideKeyboard(v, getContext());
-
             }       //end onClick()
         });
 
@@ -172,9 +167,7 @@ public class FragmentUpdate extends Fragment{
 
                 //change fragment to previous fragment when save is pressed
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if(fragmentManager.getBackStackEntryCount() != 0){
-                    fragmentManager.popBackStack();
-                }       //end if();
+                UI.popBackStack(fragmentManager);
 
                 return true;
             }

@@ -10,7 +10,6 @@ package com.silverback.lucy.cashlog.Activities;
 * Enable sidebar navigation
 * Inflate options menu (top right of screen)
 *
-*
 * */
 
 import androidx.annotation.NonNull;
@@ -48,7 +47,6 @@ import com.silverback.lucy.cashlog.Utils.UI;
 public class ActivityMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener{
     private static final String TAG = "ActivityMain";
 
-
     //fragment instances
     FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment homeFrag = new FragmentHome();     //default fragment
@@ -72,7 +70,6 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         setupToolbar();
 
         hideKeyBoard();     //hides keyboard when screen is touched
-
     }       //==================================================== close the onCreate method ===========================================
 
 
@@ -218,10 +215,10 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
     //------------------------------------------------------HELPING METHODS----------------------------------------
 
-    //deals with the toobar
+    //DEALS WITH THE TOOLBAR
     public void setupToolbar(){
-        Log.d(TAG, "setupToolbar: get toolbar view, setSupportActionBar, create DrawerToggle, drawer listener, navViewLister");
-        //DEALS WITH THE TOOLBAR
+        Log.d(TAG, "setupToolbar(): get toolbar view, setSupportActionBar, create DrawerToggle, drawer listener, navViewLister");
+
         toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -236,7 +233,6 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();        //synchronize the indicator with state of linked DrawerLayout
-
 
         //helps listen to clicks on navigation view
         navView = findViewById(R.id.nav_view);

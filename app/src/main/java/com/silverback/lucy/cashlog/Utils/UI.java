@@ -26,14 +26,26 @@ public class UI {
     }       //end loadFragment()
 
 
+    /**
+     * Hides the soft keyboard from the user
+     * @param view  The touched view
+     * @param context   context of the application
+     */
     public static void hideKeyboard(View view, Context context){
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }       //end hideKeyboard()
 
+
+    /**
+     * Pops the backstack and returns the user to previous page
+     * @param fragmentManager
+     */
     public static void popBackStack(FragmentManager fragmentManager){
-        fragmentManager.popBackStack();
-    }
+        if(fragmentManager.getBackStackEntryCount() != 0) {
+            fragmentManager.popBackStack();
+        }
+    }       //end popBackStack()
 
 
     public static void progressBarGone(ProgressBar progressBar){

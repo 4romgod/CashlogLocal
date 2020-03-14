@@ -38,7 +38,6 @@ public class AdapterListViewHistory extends ArrayAdapter<Item> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         //get the information
-        int id = getItem(position).getId();
         String type = getItem(position).getType();
         String name = getItem(position).getName();
         float amount = getItem(position).getAmount();
@@ -67,7 +66,6 @@ public class AdapterListViewHistory extends ArrayAdapter<Item> {
         tvDate.setText(date.getDay() + " " + Constants.months[date.getMonth()] +" "+date.getYear()+" - "+date.getHours());
 
         return convertView;
-
     }       //end getView()
 
 

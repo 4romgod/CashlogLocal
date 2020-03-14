@@ -33,7 +33,6 @@ import com.silverback.lucy.cashlog.Adapters.AdapterListView;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
 import com.silverback.lucy.cashlog.Utils.UI;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentMoneyIn extends Fragment{
@@ -42,18 +41,17 @@ public class FragmentMoneyIn extends Fragment{
 
     private ViewModelItem mViewModelItem;
 
-    //all views
+    //ALL VIEWS
     View layoutMain;
     ListView listView;
 
     AdapterListView adapter;
 
-
     //instance of FragmentUpdate, with fragment name, clicked item, and item ID
-    public static Fragment newUpdateFragment(String name, Item item) {
+    public static Fragment newFragmentUpdate(String type, Item item) {
         Fragment fragment = new FragmentUpdate();
         Bundle args = new Bundle();
-        args.putString("FRAG_NAME", name);
+        args.putString("FRAG_TYPE", type);
         args.putSerializable("ITEM", item);
         fragment.setArguments(args);
 
@@ -65,7 +63,6 @@ public class FragmentMoneyIn extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: fragment moneyIn is created");
-
     }       //end onCreate()
 
 
@@ -86,11 +83,12 @@ public class FragmentMoneyIn extends Fragment{
                 Toast.makeText(getContext(), "Something changed", Toast.LENGTH_SHORT).show();
                 adapter.setItems(items);
 
+                //go to update fragment when an item is clicked
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Item item = items.get(position);
-                        Fragment fragment = newUpdateFragment(getString(R.string.type_money_in), item);
+                        Fragment fragment = newFragmentUpdate(getString(R.string.type_money_in), item);
 
                         UI.loadFragment(getActivity().getSupportFragmentManager(), fragment, R.id.layout_frame_main);
                     }
@@ -98,9 +96,6 @@ public class FragmentMoneyIn extends Fragment{
 
             }
         });
-
-
-
 
         return layoutMain;
     }       //end onCreateView()

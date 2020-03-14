@@ -42,18 +42,18 @@ import java.util.Date;
 
 
 public class FragmentInsert extends Fragment {
-
     private static final String TAG = "FragmentInsert";
 
-    //all views
+    //ALL VIEWS
     View layoutMain;
     EditText nameEt, descriptionEt, amountEt;
+
     String name, description;
+    float amount;
+
+    String typeTab;
 
     Drawable originalDrawable;          //original style of EditText
-
-    float amount;
-    String tabName;
 
 
     @Override
@@ -67,8 +67,8 @@ public class FragmentInsert extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutMain = inflater.inflate(R.layout.fragment_insert, null);
 
-        tabName = getArguments().getString("FRAG_NAME");    //get the name of prev fragment, either MoneyIn or MoneyOut
-        Log.d(TAG, "onCreateView: fragment insert for"+tabName+" instantiated user interface view");
+        typeTab = getArguments().getString("FRAG_TYPE");    //Type of prev fragment (MoneyIn/MoneyOut)
+        Log.d(TAG, "onCreateView(): Fragment Insert for "+ typeTab);
 
         initToolbar();       //enabling the toolbar
         initViews();
@@ -77,41 +77,12 @@ public class FragmentInsert extends Fragment {
     }       //close the onCreateView
 
 
-
-    //initializing the views
-    public void initViews(){
-        nameEt = (EditText) layoutMain.findViewById(R.id.firstNameEt);
-        amountEt = (EditText) layoutMain.findViewById(R.id.amountEt);
-        descriptionEt = (EditText) layoutMain.findViewById(R.id.descriptionEt);
-        originalDrawable = nameEt.getBackground();      //original background of EditText
-
-        //when user start typing, return TV to original background
-        nameEt.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                nameEt.setBackgroundDrawable(originalDrawable);
-                return false;
-            }
-        });
-
-        //when user start typing, return TV to original background
-        amountEt.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                amountEt.setBackgroundDrawable(originalDrawable);
-                return false;
-            }
-        });
-
-    }       //end initViews()
-
-
     @Override
     public void onStart() {
         super.onStart();
+
         //lock the drawer
         ((ActivityMain)getActivity()).mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
     }       //end onStart()
 
 
@@ -129,12 +100,40 @@ public class FragmentInsert extends Fragment {
     }       //end onStop()
 
 
-    //method to ic_baseline_insert a toolbar
+    //initializing the views
+    public void initViews(){
+        nameEt = (EditText) layoutMain.findViewById(R.id.firstNameEt);
+        amountEt = (EditText) layoutMain.findViewById(R.id.amountEt);
+        descriptionEt = (EditText) layoutMain.findViewById(R.id.descriptionEt);
+        originalDrawable = nameEt.getBackground();      //original background of EditText
+
+        //When user start typing, return TV to original background
+        nameEt.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                nameEt.setBackgroundDrawable(originalDrawable);
+                return false;
+            }
+        });
+
+        //When user start typing, return TV to original background
+        amountEt.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                amountEt.setBackgroundDrawable(originalDrawable);
+                return false;
+            }
+        });
+
+    }       //end initViews()
+
+
+    //method to setup the Toolbar
     public void initToolbar() {
         setHasOptionsMenu(true);
         Toolbar toolbar = layoutMain.findViewById(R.id.toolbar_insert_fragment);
         toolbar.inflateMenu(R.menu.menu_insert_item);       //inflates menu into toolbar
-        toolbar.setTitle(getString(R.string.title_insert) +" "+ tabName);
+        toolbar.setTitle(getString(R.string.title_insert) +" "+ typeTab);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_black_24dp);     //prints back icon into toolbar
 
         //listener for the toolbar back button
@@ -142,15 +141,11 @@ public class FragmentInsert extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //return to previous fragment when back is pressed
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if(fragmentManager.getBackStackEntryCount() != 0){
-                    fragmentManager.popBackStack();
-                }
-
+                UI.popBackStack(fragmentManager);       //return to previous fragment
                 UI.hideKeyboard(v, getContext());
-
             }       //end onClick()
+
         }); //end setNavigationOnClickListener
 
 
@@ -172,9 +167,7 @@ public class FragmentInsert extends Fragment {
 
                     //return fragment to previous fragment when save is pressed
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    if(fragmentManager.getBackStackEntryCount() != 0){
-                        fragmentManager.popBackStack();
-                    }
+                    UI.popBackStack(fragmentManager);
 
                 }       //end if()
 
@@ -198,7 +191,7 @@ public class FragmentInsert extends Fragment {
         description = descriptionEt.getText().toString();
 
         //initialize the item
-        Item item = new Item(tabName, name, amount, description, theDate);
+        Item item = new Item(typeTab, name, amount, description, theDate);
 
         return item;
     }       //end insertData()

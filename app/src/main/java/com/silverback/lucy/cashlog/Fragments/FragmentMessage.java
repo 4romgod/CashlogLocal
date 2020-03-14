@@ -1,6 +1,5 @@
 package com.silverback.lucy.cashlog.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -21,12 +19,12 @@ import androidx.fragment.app.FragmentManager;
 
 import com.silverback.lucy.cashlog.Activities.ActivityMain;
 import com.silverback.lucy.cashlog.R;
+import com.silverback.lucy.cashlog.Utils.UI;
 
 public class FragmentMessage extends Fragment {
-
     private static final String TAG = "FragmentMessage";
 
-    //all views
+    //ALL VIEWS
     View layoutMain;
     Button submitBtn;
     EditText emailEt, messageEt;
@@ -52,6 +50,19 @@ public class FragmentMessage extends Fragment {
 
         return layoutMain;
     }       //close the onCreateView
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ActivityMain)getActivity()).getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((ActivityMain)getActivity()).getSupportActionBar().show();
+    }
 
 
     //initializing the views
@@ -82,23 +93,19 @@ public class FragmentMessage extends Fragment {
             @Override
             public void onClick(View v) {
 
-                //return to previous fragment when back is pressed
+
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (fragmentManager.getBackStackEntryCount() != 0) {
-                    fragmentManager.popBackStack();
-                }
-
-                hideKeyboard(v);
-
+                UI.popBackStack(fragmentManager);       //return to previous fragment
+                UI.hideKeyboard(v, getActivity());
             }       //end onClick()
-        }); //-------------------------end setNavigationOnClickListener
+        });             //end setNavigationOnClickListener
 
 
         //hide the softKeyboard when the toolbar is touched
         toolbar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                hideKeyboard(v);
+                UI.hideKeyboard(v, getActivity());
                 return false;
             }
         });
@@ -106,8 +113,7 @@ public class FragmentMessage extends Fragment {
     }       //end initToolbar()
 
 
-
-        //sending an email
+    //sending an email
     public void sendEmail(){
         String emailTo = "ebenezermathebula@gmail.com";
         String emailFrom = emailEt.getText().toString();
@@ -121,26 +127,6 @@ public class FragmentMessage extends Fragment {
 
         startActivity(Intent.createChooser(intent, getString(R.string.choose_email_client)));
     }       //end sendEmail()
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((ActivityMain)getActivity()).getSupportActionBar().hide();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((ActivityMain)getActivity()).getSupportActionBar().show();
-    }
-
-
-    //method to hide the soft keyboard
-    public void hideKeyboard(View v){
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
 
 
 }       //end class

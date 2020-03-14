@@ -2,12 +2,10 @@ package com.silverback.lucy.cashlog.Fragments;
 
 /*
 * THINGS WWE DO IN THIS FRAGMENT
-*
 * Create 2 tabs for MoneyIn and MoneyOut
 * Create Floating Button to lead us to the FragmentInsert (with embedded arguments)
 *
 * */
-
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -41,27 +39,27 @@ public class FragmentHome extends Fragment  {
 
     FragmentManager fragmentManager;
 
+    //All VIEWS
     View layoutMain;
     TabLayout tabLayout;
-    int tabPosition;    //position of the visible tab
-
-    ArrayList<Fragment> mFragments = new ArrayList<>();
-
     FloatingActionButton fab;
+
+    int tabPosition;    //position of the visible tab
+    ArrayList<Fragment> mFragments = new ArrayList<>();     //all fragments in tab layout
 
     /**
      * It holds a fragment along with the title of the Fragment
-     * @param name Title of the fragment to be opened by: {@link FragmentHome}
+     * @param type Title of the fragment to be opened by: {@link FragmentHome}
      * @return Returns a fragment bundled with its Title as String
      */
-    public static Fragment newInsertFragment(String name){
+    public static Fragment newFragmentInsert(String type){
         Fragment fragment = new FragmentInsert();
         Bundle args = new Bundle();
-        args.putString("FRAG_NAME", name);
+        args.putString("FRAG_TYPE", type);
         fragment.setArguments(args);
 
         return fragment;
-    }       //end newUpdateFragment()
+    }       //end newFragmentInsert()
 
 
     @Override
@@ -150,10 +148,10 @@ public class FragmentHome extends Fragment  {
 
                 //chooses fragment to INSERT into
                 if(tabLayout.getSelectedTabPosition()==0){
-                    fragment = FragmentHome.newInsertFragment(getString(R.string.type_money_in));
+                    fragment = FragmentHome.newFragmentInsert(getString(R.string.type_money_in));
                 }
                 else{
-                    fragment = FragmentHome.newInsertFragment(getString(R.string.type_money_out));
+                    fragment = FragmentHome.newFragmentInsert(getString(R.string.type_money_out));
                 }
 
                 //change fragment

@@ -40,22 +40,20 @@ public class FragmentMoneyOut extends Fragment {
 
 
     //instance of FragmentUpdate, Fragment
-    public static Fragment newUpdateFragment(String name, Item item) {
+    public static Fragment newFragmentUpdate(String type, Item item) {
         Fragment fragment = new FragmentUpdate();
-
         Bundle args = new Bundle();
-        args.putString("FRAG_NAME", name);
+        args.putString("FRAG_TYPE", type);
         fragment.setArguments(args);
 
         return fragment;        //return fragment that contains its Name as a bundle
-    }       //end newUpdateFragment()
+    }       //end newFragmentUpdate()
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: fragment moneyOut is created");
-
     }       //end onCreate()
 
 
