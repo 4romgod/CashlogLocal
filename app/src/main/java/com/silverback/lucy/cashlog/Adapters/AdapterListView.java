@@ -11,9 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.silverback.lucy.cashlog.Model.POJO.Item;
-import com.silverback.lucy.cashlog.Model.POJO.MyDate;
 import com.silverback.lucy.cashlog.R;
-import com.silverback.lucy.cashlog.Utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,6 @@ public class AdapterListView extends BaseAdapter {
 
         inflater = LayoutInflater.from(mContext);
         //inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }       //end AdapterListView()
 
 

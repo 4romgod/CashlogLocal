@@ -18,7 +18,8 @@
         android:textColor="@color/white"
         android:textAlignment="center"
         android:background="@color/grey"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal" />
 
     <ListView
         android:id="@+id/list_view_history"

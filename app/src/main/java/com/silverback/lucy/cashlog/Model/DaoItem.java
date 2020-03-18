@@ -1,6 +1,10 @@
 package com.silverback.lucy.cashlog.Model;
 
+import android.content.res.Resources;
+
 import com.silverback.lucy.cashlog.Model.POJO.Item;
+import com.silverback.lucy.cashlog.R;
+import com.silverback.lucy.cashlog.Utils.Constants;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -23,11 +27,27 @@ public interface DaoItem {
     void insert(Item item);
 
     /**
-     * Method to return a list of all the items
+     * Method to return a list of all items
      * @return LiveData List of all items
      */
-    @Query("Select * from "+Item.tableName)
+    @Query("Select * from " + Item.tableName)
     LiveData<List<Item>> getAllItems();
+
+
+    /**
+     * Method to return a list of all moneyIn items
+     * @return LiveData List of all items
+     */
+    @Query("Select * from " + Item.tableName +" where TYPE = 'Money In'")
+    LiveData<List<Item>> getAllItemsMoneyIn();
+
+
+    /**
+     * Method to return a list of all moneyOut items
+     * @return LiveData List of all items
+     */
+    @Query("Select * from " + Item.tableName +" where TYPE = 'Money Out'")
+    LiveData<List<Item>> getAllItemsMoneyOut();
 
 
     @Update

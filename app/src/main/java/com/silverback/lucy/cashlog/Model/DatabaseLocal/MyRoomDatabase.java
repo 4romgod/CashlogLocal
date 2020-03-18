@@ -11,6 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.silverback.lucy.cashlog.Model.DaoItem;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
+import com.silverback.lucy.cashlog.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +42,13 @@ public abstract class MyRoomDatabase extends RoomDatabase {
         RoomDatabase.Builder<MyRoomDatabase> builder =
                 Room.databaseBuilder(context.getApplicationContext(), MyRoomDatabase.class, DB_NAME);
 
-        return builder.fallbackToDestructiveMigration().addCallback(sRoomDatabaseCallback).build();
+        return builder.fallbackToDestructiveMigration().build();
     }       //end create()
 
 
-    //callback to insert data onStart()
+
+
+/*    //callback to insert data onStart()
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback(){
 
         @Override
@@ -68,7 +71,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(final Void... params) {
-            allItems.add(new Item("MoneyIn", "Salary", 2000, "Money from mom"));
+            allItems.add(new Item(getString(R.string.type_money_in), "Salary", 2000, "Money from mom"));
             allItems.add(new Item("MoneyOut", "Grocery", 500, "Money from mom"));
             allItems.add(new Item("MoneyIn", "Boxing", 2000, "Money from mom"));
 
@@ -78,6 +81,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
 
             return null;
         }
-    }       //end class
+    }       //end class*/
+
 
 }       //end class

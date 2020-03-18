@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.silverback.lucy.cashlog.Model.ViewModelItem;
@@ -44,6 +45,7 @@ public class FragmentMoneyIn extends Fragment{
     //ALL VIEWS
     View layoutMain;
     ListView listView;
+    ProgressBar progressBar;
 
     AdapterListView adapter;
 
@@ -70,18 +72,20 @@ public class FragmentMoneyIn extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutMain = inflater.inflate(R.layout.fragment_money_in, null);
-
-        mViewModelItem = ViewModelProviders.of(this).get(ViewModelItem.class);
-
         listView = layoutMain.findViewById(R.id.list_view_money_in);
+        progressBar = layoutMain.findViewById(R.id.progressBar);
+
+        mViewModelItem = ViewModelProviders.of(this).get(ViewModelItem.class);      //viewModel
+
         adapter = new AdapterListView(getActivity(), R.layout.layout_custom_list_view_money_in);
         listView.setAdapter(adapter);
 
-        mViewModelItem.getAllItems().observe(getActivity(), new Observer<List<Item>>() {
+        mViewModelItem.getAllItemsMoneyIn().observe(getActivity(), new Observer<List<Item>>() {
             @Override
             public void onChanged(final List<Item> items) {
                 Toast.makeText(getContext(), "Something changed", Toast.LENGTH_SHORT).show();
                 adapter.setItems(items);
+                progressBar.setVisibility(View.GONE);
 
                 //go to update fragment when an item is clicked
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

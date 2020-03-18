@@ -136,11 +136,10 @@ public class FragmentInsert extends Fragment {
         toolbar.setTitle(getString(R.string.title_insert) +" "+ typeTab);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_black_24dp);     //prints back icon into toolbar
 
-        //listener for the toolbar back button
+        //Listener for the navigation back button
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 UI.popBackStack(fragmentManager);       //return to previous fragment
                 UI.hideKeyboard(v, getContext());
@@ -148,14 +147,12 @@ public class FragmentInsert extends Fragment {
 
         }); //end setNavigationOnClickListener
 
-
-        //listener for the toolbar save button
+        //Listener for the toolbar menu save button
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
                 if(!Validation.isEmpty(nameEt) && !Validation.isEmpty(amountEt)){
-
                     View view = getActivity().getCurrentFocus();
                     if(view != null){
                         UI.hideKeyboard(view, getActivity());
@@ -168,7 +165,6 @@ public class FragmentInsert extends Fragment {
                     //return fragment to previous fragment when save is pressed
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     UI.popBackStack(fragmentManager);
-
                 }       //end if()
 
                 return true;
@@ -187,8 +183,12 @@ public class FragmentInsert extends Fragment {
 
         //get the input values
         name = nameEt.getText().toString();
-        amount = Float.parseFloat(amountEt.getText().toString());
         description = descriptionEt.getText().toString();
+        amount = Float.parseFloat(amountEt.getText().toString());
+
+        if(typeTab == getString(R.string.type_money_out)){
+            amount = -amount;
+        }
 
         //initialize the item
         Item item = new Item(typeTab, name, amount, description, theDate);

@@ -15,17 +15,30 @@ public class ViewModelItem extends AndroidViewModel {
     private RepositoryItem mRepositoryItem;
 
     private LiveData<List<Item>> mAllItems;
+    private LiveData<List<Item>> mAllItemsMoneyIn;
+    private LiveData<List<Item>> mAllItemsMoneyOut;
 
 
     public ViewModelItem(@NonNull Application application) {
         super(application);
         mRepositoryItem = new RepositoryItem(application);
         mAllItems = mRepositoryItem.getAllItems();
+        mAllItemsMoneyIn = mRepositoryItem.getAllItemsMoneyIn();
+        mAllItemsMoneyOut = mRepositoryItem.getAllItemsMoneyOut();
     }       //end constructor()
 
     public LiveData<List<Item>> getAllItems(){
         return mAllItems;
     }       //end getAllItems()
+
+    public LiveData<List<Item>> getAllItemsMoneyIn(){
+        return mAllItemsMoneyIn;
+    }       //end getAllItemsMoneyIn()
+
+    public LiveData<List<Item>> getAllItemsMoneyOut(){
+        return mAllItemsMoneyOut;
+    }       //end getAllItemsMoneyOut()
+
 
     public void insert(Item item){
         mRepositoryItem.insert(item);

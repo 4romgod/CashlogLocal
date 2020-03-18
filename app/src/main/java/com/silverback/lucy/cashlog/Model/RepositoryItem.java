@@ -14,17 +14,30 @@ public class RepositoryItem {
 
     private DaoItem mDaoItem;
     private LiveData<List<Item>> mAllItems;
+    private LiveData<List<Item>> mAllItemsMoneyIn;
+    private LiveData<List<Item>> mAllItemsMoneyOut;
+
 
     RepositoryItem(Application application){
         MyRoomDatabase db = MyRoomDatabase.getINSTANCE(application);
         mDaoItem = db.daoItem();
         mAllItems = mDaoItem.getAllItems();
+        mAllItemsMoneyIn = mDaoItem.getAllItemsMoneyIn();
+        mAllItemsMoneyOut = mDaoItem.getAllItemsMoneyOut();
     }       //end constructor()
-
 
     LiveData<List<Item>> getAllItems(){
         return mAllItems;
-    }       //end getAllItems()
+    }       //end getAllItemsMoneyIn()
+
+    LiveData<List<Item>> getAllItemsMoneyIn(){
+        return mAllItemsMoneyIn;
+    }       //end getAllItemsMoneyIn()
+
+
+    LiveData<List<Item>> getAllItemsMoneyOut(){
+        return mAllItemsMoneyOut;
+    }       //end getAllItemsMoneyOut()
 
 
     public void insert(Item item){
