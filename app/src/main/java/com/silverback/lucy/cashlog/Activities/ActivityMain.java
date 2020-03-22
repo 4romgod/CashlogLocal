@@ -135,8 +135,6 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     //========================================================EVENTS========================================================
 
 
-
-
     //------------------------------------------------------------MENU AND NAVIGATION---------------------------------------------------
     //make Toggle menu icon clickable
     @Override
@@ -149,6 +147,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         if (item.getItemId()==R.id.Settings){
             Intent settingIntent = new Intent(ActivityMain.this, ActivitySettings.class);
             startActivity(settingIntent);
+            return true;
         }
         return super.onOptionsItemSelected(item);       //returns the selected menu item
 

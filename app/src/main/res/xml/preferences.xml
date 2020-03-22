@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory
+        android:title="General">
+
+        <MultiSelectListPreference
+            android:dialogTitle="Select your currency"
+            android:title="Currency"
+            android:key="currency_list"
+            android:summary="Press to show currencies"
+            android:entries="@array/currency"
+            android:entryValues="@array/currency" />
+
+        <SwitchPreference
+            android:title="Theme"
+            android:key="key_theme"
+            android:summary="Battery Saver only" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Display">
+
+        <SeekBarPreference
+            android:title="Brightness"
+            android:key="key_brightness"
+            android:summary="Brightness level"/>
+
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

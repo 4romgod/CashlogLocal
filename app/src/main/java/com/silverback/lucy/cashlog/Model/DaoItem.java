@@ -38,7 +38,7 @@ public interface DaoItem {
      * Method to return a list of all moneyIn items
      * @return LiveData List of all items
      */
-    @Query("Select * from " + Item.tableName +" where TYPE = 'Money In'")
+    @Query("Select * from " + Item.tableName +" where TYPE = 'MoneyIn'")
     LiveData<List<Item>> getAllItemsMoneyIn();
 
 
@@ -46,7 +46,7 @@ public interface DaoItem {
      * Method to return a list of all moneyOut items
      * @return LiveData List of all items
      */
-    @Query("Select * from " + Item.tableName +" where TYPE = 'Money Out'")
+    @Query("Select * from " + Item.tableName +" where TYPE = 'MoneyOut'")
     LiveData<List<Item>> getAllItemsMoneyOut();
 
 

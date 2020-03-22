@@ -13,8 +13,8 @@
     <string name="title_update">Edit</string>
 
     <!--types of items-->
-    <string name="type_money_in">Money In</string>
-    <string name="type_money_out">Money Out</string>
+    <string name="type_money_in">MoneyIn</string>
+    <string name="type_money_out">MoneyOut</string>
 
     <!--navigation drawer states-->
     <string name="navigation_drawer_open">Open navigation drawer</string>

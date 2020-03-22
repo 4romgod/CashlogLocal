@@ -27,7 +27,7 @@ public class FragmentMessage extends Fragment {
     //ALL VIEWS
     View layoutMain;
     Button submitBtn;
-    EditText emailEt, messageEt;
+    EditText subjectEt, messageEt;
 
 
     @Override
@@ -67,7 +67,7 @@ public class FragmentMessage extends Fragment {
 
     //initializing the views
     public void initViews(){
-        emailEt = layoutMain.findViewById(R.id.emailEt);
+        subjectEt = layoutMain.findViewById(R.id.subjectEt);
         messageEt = layoutMain.findViewById(R.id.messageEt);
 
         submitBtn = layoutMain.findViewById(R.id.submitBtn);
@@ -93,7 +93,6 @@ public class FragmentMessage extends Fragment {
             @Override
             public void onClick(View v) {
 
-
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 UI.popBackStack(fragmentManager);       //return to previous fragment
                 UI.hideKeyboard(v, getActivity());
@@ -115,12 +114,13 @@ public class FragmentMessage extends Fragment {
 
     //sending an email
     public void sendEmail(){
-        String emailTo = "ebenezermathebula@gmail.com";
-        String emailFrom = emailEt.getText().toString();
+        String emailTo = "4romgod@gmail.com";
+        String subject = subjectEt.getText().toString();
         String message = messageEt.getText().toString();
 
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL, emailTo);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, message);
 
         intent.setType("message/rfc822");

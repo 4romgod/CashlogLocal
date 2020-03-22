@@ -89,5 +89,4 @@ public class AdapterListViewHistory extends ArrayAdapter<Item> {
     }       //end getView()
 
 
-
 }       //end class()

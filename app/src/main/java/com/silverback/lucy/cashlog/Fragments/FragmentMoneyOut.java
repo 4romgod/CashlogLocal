@@ -11,6 +11,7 @@ package com.silverback.lucy.cashlog.Fragments;
  *
  */
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,12 +27,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.silverback.lucy.cashlog.Model.ViewModelItem;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Adapters.AdapterListView;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
+import com.silverback.lucy.cashlog.Utils.Calculations;
 import com.silverback.lucy.cashlog.Utils.UI;
 
 import java.util.List;
@@ -46,6 +49,7 @@ public class FragmentMoneyOut extends Fragment{
     View layoutMain;
     ListView listView;
     ProgressBar progressBar;
+    TextView tvTotalAmount;
 
     AdapterListView adapter;
 
@@ -74,6 +78,7 @@ public class FragmentMoneyOut extends Fragment{
         layoutMain = inflater.inflate(R.layout.fragment_money_out, null);
         listView = layoutMain.findViewById(R.id.list_view_money_out);
         progressBar = layoutMain.findViewById(R.id.progressBar);
+        tvTotalAmount = layoutMain.findViewById(R.id.tvTotalAmount);
 
         mViewModelItem = ViewModelProviders.of(this).get(ViewModelItem.class);      //viewModel
 
@@ -86,6 +91,10 @@ public class FragmentMoneyOut extends Fragment{
                 Toast.makeText(getContext(), "Something changed", Toast.LENGTH_SHORT).show();
                 adapter.setItems(items);
                 progressBar.setVisibility(View.GONE);
+
+                //set the total amount
+                String amountText = String.format("R%.2f", Calculations.getTotal(items));
+                tvTotalAmount.setText(amountText);
 
                 //go to update fragment when an item is clicked
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

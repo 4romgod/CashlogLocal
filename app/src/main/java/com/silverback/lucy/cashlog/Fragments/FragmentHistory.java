@@ -17,12 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.silverback.lucy.cashlog.Activities.ActivityMain;
 import com.silverback.lucy.cashlog.Model.ViewModelItem;
 import com.silverback.lucy.cashlog.R;
 import com.silverback.lucy.cashlog.Adapters.AdapterListViewHistory;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
+import com.silverback.lucy.cashlog.Utils.Calculations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class FragmentHistory extends Fragment {
     View layoutMain;
     ListView listView;
     ProgressBar progressBar;
+    TextView tvTotalAmount;
 
     private ViewModelItem mViewModelItem;
 
@@ -54,6 +57,7 @@ public class FragmentHistory extends Fragment {
         layoutMain = inflater.inflate(R.layout.fragment_history, null);
         listView = layoutMain.findViewById(R.id.list_view_history);
         progressBar = (ProgressBar) layoutMain.findViewById(R.id.progressBar);
+        tvTotalAmount = layoutMain.findViewById(R.id.tvTotalAmount);
         Log.d(TAG, "onCreateView: fragment history instantiated user interface view");
 
         mViewModelItem = ViewModelProviders.of(this).get(ViewModelItem.class);      //viewModel
@@ -67,6 +71,11 @@ public class FragmentHistory extends Fragment {
             @Override
             public void onChanged(List<Item> items) {
                 adapter.setItems(items);
+                progressBar.setVisibility(View.GONE);
+
+                //set the total amount
+                String amountText = String.format("R%.2f", Calculations.getBalance(items));
+                tvTotalAmount.setText(amountText);
             }
         });
 

@@ -72,24 +72,33 @@ public class FragmentHome extends Fragment  {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        layoutMain = inflater.inflate(R.layout.fragment_home, null);
-
-        fragmentManager = getActivity().getSupportFragmentManager();
-
         //unlock the navigation drawer
         ((ActivityMain)getActivity()).mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
-        createTabs();       //method creates tab, and activate floating button
-        floatingButton();
+        if(layoutMain == null){     //to avoid recreating the view
+            layoutMain = inflater.inflate(R.layout.fragment_home, null);
+            fragmentManager = getActivity().getSupportFragmentManager();
+            createTabs();       //method creates tab, and activate floating button
+            floatingButton();
+        }
 
         return layoutMain;
     }       //end onCreateView()
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     /**
      * method to create tabs, and activate Floating button,
      */
-
     public void createTabs(){
         //Log.d(TAG, "createTabs: create tabs, init viewpager, set adapter");
 
@@ -103,7 +112,7 @@ public class FragmentHome extends Fragment  {
 
         //view pager holds the tabs fragments
         final ViewPager viewPager = layoutMain.findViewById(R.id.view_pager);
-        AdapterTabs tabsAdapter = new AdapterTabs(getChildFragmentManager(), mFragments);
+        AdapterTabs tabsAdapter = new AdapterTabs(getChildFragmentManager(), mFragments);       //getChildFragMan for frag inside a frag
 
         //listens for a swipe to switch to another tab, then changes tab focus
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -144,18 +153,18 @@ public class FragmentHome extends Fragment  {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = null;
+                Fragment fragmentInsert = null;
 
                 //chooses fragment to INSERT into
                 if(tabLayout.getSelectedTabPosition()==0){
-                    fragment = FragmentHome.newFragmentInsert(getString(R.string.type_money_in));
+                    fragmentInsert = FragmentHome.newFragmentInsert(getString(R.string.type_money_in));
                 }
                 else{
-                    fragment = FragmentHome.newFragmentInsert(getString(R.string.type_money_out));
+                    fragmentInsert = FragmentHome.newFragmentInsert(getString(R.string.type_money_out));
                 }
 
                 //change fragment
-                UI.loadFragment(fragmentManager, fragment, R.id.layout_frame_main);
+                UI.loadFragment(fragmentManager, fragmentInsert, R.id.layout_frame_main);
 
             }       //end onClick()
 

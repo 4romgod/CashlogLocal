@@ -6,25 +6,39 @@
     android:id="@+id/parentLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    //holds the tabs (tabSelectedTextColor change color of selected tab)
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        style="@style/MyCustomTabLayout"
-        app:tabTextColor="@color/lightgrey"
-        app:tabSelectedTextColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    //all the screens of the tab (acts as one long screen)
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout"/>
+        //holds the tabs (tabSelectedTextColor change color of selected tab)
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            style="@style/MyCustomTabLayout"
+            app:tabTextColor="@color/lightgrey"
+            app:tabSelectedTextColor="@color/white"
+            android:layout_gravity="top"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_layout">
+            //all the screens of the tab (acts as one long screen)
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 
     //floating button for all the tabs
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -35,9 +49,8 @@
         android:src="@drawable/ic_baseline_insert"
         app:backgroundTint="@color/color_floating_btn"
         app:fabSize="normal"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="50dp"
         android:layout_marginRight="30dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -108,7 +108,7 @@ public class FragmentUpdate extends Fragment{
 
     //initializing the views
     public void initViews(){
-        nameEt = (EditText) layoutMain.findViewById(R.id.firstNameEt);
+        nameEt = (EditText) layoutMain.findViewById(R.id.subjectEt);
         nameEt.setText(""+oldItem.getName());
 
         amountEt =(EditText) layoutMain.findViewById(R.id.amountEt);

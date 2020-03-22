@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Database(entities = {Item.class}, exportSchema = false, version = 1)
+@Database(entities = {Item.class}, exportSchema = false, version = 2)
 public abstract class MyRoomDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "items.db";
@@ -42,13 +42,13 @@ public abstract class MyRoomDatabase extends RoomDatabase {
         RoomDatabase.Builder<MyRoomDatabase> builder =
                 Room.databaseBuilder(context.getApplicationContext(), MyRoomDatabase.class, DB_NAME);
 
-        return builder.fallbackToDestructiveMigration().build();
+        return builder.fallbackToDestructiveMigration().addCallback(sRoomDatabaseCallback).build();
     }       //end create()
 
 
 
 
-/*    //callback to insert data onStart()
+    //callback to insert data onStart()
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback(){
 
         @Override
@@ -71,9 +71,15 @@ public abstract class MyRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(final Void... params) {
-            allItems.add(new Item(getString(R.string.type_money_in), "Salary", 2000, "Money from mom"));
-            allItems.add(new Item("MoneyOut", "Grocery", 500, "Money from mom"));
-            allItems.add(new Item("MoneyIn", "Boxing", 2000, "Money from mom"));
+            allItems.add(new Item("MoneyIn", "Salary", 11000, "Money from mom"));
+            allItems.add(new Item("MoneyIn", "Boxing", 2500, "Money from mom"));
+            allItems.add(new Item("MoneyIn", "Salary", 11000, "Money from mom"));
+            allItems.add(new Item("MoneyIn", "Boxing", 2500, "Money from mom"));
+
+            allItems.add(new Item("MoneyOut", "Grocery", 1200, "Money from mom"));
+            allItems.add(new Item("MoneyOut", "Lean", 150, "sip on lean"));
+            allItems.add(new Item("MoneyOut", "Grocery", 1200, "Money from mom"));
+            allItems.add(new Item("MoneyOut", "Lean", 150, "sip on lean"));
 
             for (int i=0; i<allItems.size(); i++){
                 mDaoItem.insert(allItems.get(i));
@@ -81,7 +87,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
 
             return null;
         }
-    }       //end class*/
+    }       //end class
 
 
 }       //end class

@@ -44,6 +44,8 @@ import java.util.Date;
 public class FragmentInsert extends Fragment {
     private static final String TAG = "FragmentInsert";
 
+    FragmentManager fragmentManager;
+
     //ALL VIEWS
     View layoutMain;
     EditText nameEt, descriptionEt, amountEt;
@@ -69,6 +71,8 @@ public class FragmentInsert extends Fragment {
 
         typeTab = getArguments().getString("FRAG_TYPE");    //Type of prev fragment (MoneyIn/MoneyOut)
         Log.d(TAG, "onCreateView(): Fragment Insert for "+ typeTab);
+
+        fragmentManager = getActivity().getSupportFragmentManager();
 
         initToolbar();       //enabling the toolbar
         initViews();
@@ -102,7 +106,7 @@ public class FragmentInsert extends Fragment {
 
     //initializing the views
     public void initViews(){
-        nameEt = (EditText) layoutMain.findViewById(R.id.firstNameEt);
+        nameEt = (EditText) layoutMain.findViewById(R.id.subjectEt);
         amountEt = (EditText) layoutMain.findViewById(R.id.amountEt);
         descriptionEt = (EditText) layoutMain.findViewById(R.id.descriptionEt);
         originalDrawable = nameEt.getBackground();      //original background of EditText
@@ -140,8 +144,8 @@ public class FragmentInsert extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                UI.popBackStack(fragmentManager);       //return to previous fragment
+                //UI.popBackStack(fragmentManager);       //return to previous fragment
+                getActivity().onBackPressed();
                 UI.hideKeyboard(v, getContext());
             }       //end onClick()
 
@@ -163,8 +167,8 @@ public class FragmentInsert extends Fragment {
                     viewModelItem.insert(getInputItem());
 
                     //return fragment to previous fragment when save is pressed
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    UI.popBackStack(fragmentManager);
+                    //UI.popBackStack(fragmentManager);
+                    getActivity().onBackPressed();
                 }       //end if()
 
                 return true;
