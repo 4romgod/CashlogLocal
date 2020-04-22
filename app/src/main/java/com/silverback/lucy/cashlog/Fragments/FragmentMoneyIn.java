@@ -16,6 +16,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -36,6 +37,7 @@ import com.silverback.lucy.cashlog.Model.POJO.Item;
 import com.silverback.lucy.cashlog.Utils.Calculations;
 import com.silverback.lucy.cashlog.Utils.UI;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class FragmentMoneyIn extends Fragment{
@@ -43,6 +45,10 @@ public class FragmentMoneyIn extends Fragment{
     private static final String TAG = "FragmentMoneyIn";
 
     private ViewModelItem mViewModelItem;
+    private LiveData<List<Item>> liveDataMoneyIn;
+
+
+    String savedString = "";
 
     //ALL VIEWS
     View layoutMain;
@@ -65,9 +71,21 @@ public class FragmentMoneyIn extends Fragment{
 
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("liveData", "some data in a string");
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: fragment moneyIn is created");
+
+        if( (savedInstanceState != null) && (savedInstanceState.getString("liveData") != null) ){
+            savedString = savedInstanceState.getString("liveData");
+        }
+
     }       //end onCreate()
 
 
@@ -79,12 +97,12 @@ public class FragmentMoneyIn extends Fragment{
         progressBar = layoutMain.findViewById(R.id.progressBar);
         tvTotalAmount = layoutMain.findViewById(R.id.tvTotalAmount);
 
-        mViewModelItem = ViewModelProviders.of(this).get(ViewModelItem.class);      //viewModel
-
         adapter = new AdapterListView(getActivity(), R.layout.layout_custom_list_view_money_in);
         listView.setAdapter(adapter);
 
-        mViewModelItem.getAllItemsMoneyIn().observe(getActivity(), new Observer<List<Item>>() {
+        mViewModelItem = ViewModelProviders.of(this).get(ViewModelItem.class);      //viewModel
+        liveDataMoneyIn = mViewModelItem.getAllItemsMoneyIn();
+        liveDataMoneyIn.observe(getActivity(), new Observer<List<Item>>() {
             @Override
             public void onChanged(final List<Item> items) {
                 Toast.makeText(getContext(), "Something changed", Toast.LENGTH_SHORT).show();
@@ -112,5 +130,18 @@ public class FragmentMoneyIn extends Fragment{
         return layoutMain;
     }       //end onCreateView()
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: data: "+savedString);
+
+    }
+
+
+/*    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        savedString = savedInstanceState.getString("liveData");
+    }*/
 
 }       //end class

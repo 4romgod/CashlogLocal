@@ -11,13 +11,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.silverback.lucy.cashlog.Model.DaoItem;
 import com.silverback.lucy.cashlog.Model.POJO.Item;
-import com.silverback.lucy.cashlog.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Database(entities = {Item.class}, exportSchema = false, version = 2)
+@Database(entities = {Item.class}, exportSchema = false, version = 1)
 public abstract class MyRoomDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "items.db";

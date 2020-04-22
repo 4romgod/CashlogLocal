@@ -46,10 +46,12 @@ import com.silverback.lucy.cashlog.Utils.UI;
  */
 public class ActivityMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener{
     private static final String TAG = "ActivityMain";
+    private final String FRAG_ACTIVE_TAG = "tagActiveFragment";
 
     //fragment instances
     FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment homeFrag = new FragmentHome();     //default fragment
+    Fragment fragActive;
 
     Toolbar toolbar;
 
@@ -65,6 +67,13 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: Main Activity has been created");
+
+        /*if(savedInstanceState != null){
+            fragActive = getSupportFragmentManager().findFragmentByTag(FRAG_ACTIVE_TAG);
+        }
+        else if (fragActive == null) {
+            fragActive = new FragmentHome();
+        }*/
 
         //get toolbar view, setSupportActionBar, create DrawerToggle, drawer listener, navViewLister
         setupToolbar();
@@ -100,7 +109,7 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
             mDrawerLayout.closeDrawer(GravityCompat.START);     //close drawer if opened
         }
         else {
-            if(fragmentManager.getBackStackEntryCount()==1){
+            if(fragmentManager.getBackStackEntryCount() == 1){
                 Log.d(TAG, "onBackPressed: Closing application");
                 finish();
             }
@@ -115,19 +124,12 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackStackChanged() {
+        Log.d(TAG, "onBackStackChanged: \n");
 
-        String entryName="";
-
-        int count = fragmentManager.getBackStackEntryCount();
-        for(int i=count-1; i>=0; i--) {
+        for(int i=fragmentManager.getBackStackEntryCount()-1; i>=0; i--) {
             FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(i);
 
-            entryName = entry.getName();
-
-            String stackEntryNames = "";
-            stackEntryNames = stackEntryNames + entryName + "\n";
-
-            Log.d(TAG, "onBackStackChanged: " +entry.getId()+"."+ stackEntryNames);
+            Log.d(TAG, entry.getId()+"."+ entry.getName() + "\n");
         }       //end for()
 
     }       //end onBackStackChanged()
@@ -205,15 +207,12 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home, menu);     //we inflate our activity with the menu_drawer
         return super.onCreateOptionsMenu(menu);
-
     }       //close the onCreateOptionsMenu
 
     //==============================================MENU AND NAVIGATION===================================================
 
 
-
     //------------------------------------------------------HELPING METHODS----------------------------------------
-
     //DEALS WITH THE TOOLBAR
     public void setupToolbar(){
         Log.d(TAG, "setupToolbar(): get toolbar view, setSupportActionBar, create DrawerToggle, drawer listener, navViewLister");
@@ -241,7 +240,6 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
     }       //end setupToolbar()
 
 
-
     public void hideKeyBoard(){
         //close the keyboard if the screen is touched
         findViewById(R.id.drawer_layout).setOnTouchListener(new View.OnTouchListener() {
@@ -262,7 +260,6 @@ public class ActivityMain extends AppCompatActivity implements NavigationView.On
         });
     }
     //=======================================================HELPING METHODS================================================
-
 
 
 }      //close the class

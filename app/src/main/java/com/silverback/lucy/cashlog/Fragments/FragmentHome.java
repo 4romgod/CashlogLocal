@@ -75,7 +75,8 @@ public class FragmentHome extends Fragment  {
         //unlock the navigation drawer
         ((ActivityMain)getActivity()).mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
-        if(layoutMain == null){     //to avoid recreating the view
+        //to avoid recreating the view
+        if(layoutMain == null){
             layoutMain = inflater.inflate(R.layout.fragment_home, null);
             fragmentManager = getActivity().getSupportFragmentManager();
             createTabs();       //method creates tab, and activate floating button

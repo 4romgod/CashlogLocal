@@ -27,7 +27,7 @@ public class FragmentMessage extends Fragment {
     //ALL VIEWS
     View layoutMain;
     Button submitBtn;
-    EditText subjectEt, messageEt;
+    EditText nameEt, emailEt, subjectEt, messageEt;
 
 
     @Override
@@ -67,6 +67,8 @@ public class FragmentMessage extends Fragment {
 
     //initializing the views
     public void initViews(){
+        nameEt = layoutMain.findViewById(R.id.nameEt);
+        emailEt = layoutMain.findViewById(R.id.emailEt);
         subjectEt = layoutMain.findViewById(R.id.subjectEt);
         messageEt = layoutMain.findViewById(R.id.messageEt);
 
